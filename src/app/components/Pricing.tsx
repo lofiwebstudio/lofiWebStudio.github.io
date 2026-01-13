@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Check, Clock, MessageSquare, Sparkles, Star } from 'lucide-react';
+import { Check, Clock, MessageSquare, Sparkles, Star, Zap, Rocket, Crown } from 'lucide-react';
 
 interface PricingProps {
   onSelectPackage: (page: 'contact', packageName: string) => void;
@@ -10,57 +10,66 @@ export function Pricing({ onSelectPackage }: PricingProps) {
     {
       name: 'MINI',
       price: '1 400 zł',
-      color: 'from-emerald-500 to-green-500',
-      icon: '🟢',
+      priceNote: 'netto',
+      color: 'from-violet-400 to-purple-400',
+      icon: 'Zap',
       subtitle:
         'Dla bardzo małych firm i usług lokalnych, które potrzebują solidnej obecności online',
+      description: 'Idealne rozwiązanie na start - profesjonalna wizytówka online',
       features: [
         '1 strona (one-page) lub do 3 sekcji',
-        'wersja mobilna',
+        'w pełni responsywny design (telefon, tablet, desktop)',
         'formularz kontaktowy',
-        'podstawowa optymalizacja SEO',
-        'wdrożenie i publikacja',
+        'podstawowa optymalizacja SEO (meta tagi, szybkość ładowania)',
+        'wdrożenie i publikacja na serwerze',
       ],
       time: 'do 5 dni',
       revisions: '1 runda poprawek',
       popular: false,
+      ctaText: 'Sprawdź dostępność',
     },
     {
       name: 'STANDARD',
       price: '2 000 zł',
-      color: 'from-amber-500 to-orange-500',
-      icon: '🟡',
+      priceNote: 'netto',
+      color: 'from-violet-600 to-purple-600',
+      icon: 'Rocket',
       subtitle: 'Najlepszy balans między ceną, jakością i funkcjonalnością',
+      description: 'Kompleksowa strona z wszystkim, czego potrzebuje rozwijający się biznes',
       features: [
         'do 5 podstron',
-        'wersja mobilna',
-        'formularze kontaktowe',
-        'podstawowa optymalizacja SEO',
-        'mapy Google',
-        'prosta galeria zdjęć',
+        'w pełni responsywny design (telefon, tablet, desktop)',
+        'formularze kontaktowe z walidacją',
+        'optymalizacja SEO (meta tagi, struktura URL, szybkość)',
+        'integracja z mapami Google',
+        'galeria zdjęć z lightbox',
       ],
       time: 'do 7 dni',
       revisions: '2 rundy poprawek',
       popular: true,
+      ctaText: 'Wybieram Standard',
     },
     {
       name: 'PLUS',
       price: '2 600 zł',
-      color: 'from-blue-500 to-indigo-500',
-      icon: '🔵',
+      priceNote: 'netto',
+      color: 'from-purple-600 to-pink-600',
+      icon: 'Crown',
       subtitle: 'Dla firm, które chcą budować zaufanie i wyglądać profesjonalnie',
+      description: 'Zaawansowana strona, która wyróżni Cię na rynku',
       features: [
         'do 8 podstron',
-        'wersja mobilna',
-        'formularze kontaktowe',
-        'więcej interaktywnych elementów i animacji',
-        'optymalizacja SEO',
-        'galeria zdjęć',
-        'mapy Google + inne dodatki',
+        'w pełni responsywny design (telefon, tablet, desktop)',
+        'zaawansowane formularze kontaktowe',
+        'rozbudowane interaktywne elementy i animacje',
+        'pełna optymalizacja SEO (+ schema.org, Open Graph)',
+        'zaawansowana galeria zdjęć',
+        'mapy Google + dodatkowe integracje',
       ],
       time: 'do 10 dni',
       revisions: '3 rundy poprawek',
       popular: false,
+      ctaText: 'Sprawdź dostępność',
     },
   ];
 
@@ -93,8 +102,8 @@ export function Pricing({ onSelectPackage }: PricingProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Jasne pakiety bez ukrytych kosztów. Każdy projekt realizuję indywidualnie, z
-            profesjonalnym podejściem programistycznym.
+            Profesjonalne strony w przystępnej cenie. Płacisz tylko raz - żadnych abonamentów,
+            żadnych ukrytych kosztów.
           </motion.p>
         </motion.div>
 
@@ -132,22 +141,28 @@ export function Pricing({ onSelectPackage }: PricingProps) {
                   transition={{ duration: 8, repeat: Infinity }}
                 />
                 <div className="relative z-10">
-                  <div className="text-4xl mb-2">{pkg.icon}</div>
+                  <div className="mb-3">
+                    {pkg.icon === 'Zap' && <Zap className="w-10 h-10 text-white" />}
+                    {pkg.icon === 'Rocket' && <Rocket className="w-10 h-10 text-white" />}
+                    {pkg.icon === 'Crown' && <Crown className="w-10 h-10 text-white" />}
+                  </div>
                   <h3 className="text-2xl text-white mb-2">Pakiet {pkg.name}</h3>
-                  <p className="text-white/90 text-sm mb-4">{pkg.subtitle}</p>
-                  <div className="text-4xl text-white">{pkg.price}</div>
+                  <p className="text-white/90 text-sm mb-6">{pkg.subtitle}</p>
+                  <div className="flex items-baseline gap-2">
+                    <div className="text-4xl font-bold text-white">{pkg.price}</div>
+                    <div className="text-white/80 text-sm">{pkg.priceNote}</div>
+                  </div>
                 </div>
               </div>
 
               {/* Features */}
               <div className="p-8">
-                <p className="text-sm text-gray-600 mb-4">
-                  Zakres prac dobrany tak, aby strona była czytelna, szybka i gotowa do pozyskiwania
-                  klientów.
+                <p className="text-sm text-gray-600 mb-6 font-medium">
+                  {pkg.description}
                 </p>
 
-                <div className="mb-6">
-                  <h4 className="text-sm uppercase text-gray-500 mb-4">W cenie:</h4>
+                <div className="mb-8">
+                  <h4 className="text-sm uppercase text-gray-500 mb-5 font-semibold tracking-wide">W cenie:</h4>
                   <ul className="space-y-3">
                     {pkg.features.map((feature, idx) => (
                       <motion.li
@@ -181,7 +196,7 @@ export function Pricing({ onSelectPackage }: PricingProps) {
                 {/* CTA Button */}
                 <motion.button
                   onClick={() => onSelectPackage('contact', pkg.name)}
-                  className={`mt-8 w-full py-3 rounded-full transition-all cursor-pointer ${
+                  className={`mt-8 w-full py-3 rounded-full transition-all cursor-pointer font-semibold ${
                     pkg.popular
                       ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg hover:shadow-xl'
                       : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -189,7 +204,7 @@ export function Pricing({ onSelectPackage }: PricingProps) {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Zapytaj o ten pakiet
+                  {pkg.ctaText}
                 </motion.button>
               </div>
             </motion.div>
@@ -204,16 +219,17 @@ export function Pricing({ onSelectPackage }: PricingProps) {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
-            <h3 className="text-xl mb-4 text-gray-900">💡 Dodatkowe informacje</h3>
-            <div className="text-gray-600 space-y-2 text-sm">
+            <h3 className="text-xl mb-6 text-gray-900 font-semibold">💡 Dodatkowe informacje</h3>
+            <div className="text-gray-600 space-y-3 text-sm">
               <p>✅ Hosting na pierwszy miesiąc gratis</p>
+              <p>✅ Domena .pl lub .com w cenie (pierwszy rok)</p>
               <p>✅ Płatność w 2 ratach (50% przed, 50% po zakończeniu)</p>
-              <p>✅ 30 dni wsparcia technicznego po wdrożeniu</p>
+              <p>✅ 30 dni wsparcia technicznego po wdrożeniu (potem opcjonalnie płatne)</p>
               <p>
                 ✅ Potrzebujesz innego zakresu?{' '}
                 <button
                   onClick={() => onSelectPackage('contact', 'INDYWIDUALNY')}
-                  className="text-violet-600 hover:underline cursor-pointer"
+                  className="text-violet-600 hover:underline cursor-pointer font-medium"
                 >
                   Skontaktuj się
                 </button>{' '}

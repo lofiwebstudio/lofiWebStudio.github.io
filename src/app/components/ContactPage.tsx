@@ -20,37 +20,22 @@ export function ContactPage({ selectedPackage }: ContactPageProps) {
     e.preventDefault();
 
     try {
-      // Pobierz swój Access Key z Web3Forms:
-      // 1. Wejdź na https://web3forms.com/
-      // 2. Wpisz swój email: contact@lofiwebstudio.pl
-      // 3. Skopiuj Access Key z emaila i wklej poniżej
-
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('https://formspree.io/f/mdaaojnk', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: 'YOUR_ACCESS_KEY_HERE', // 👈 Wklej tutaj Access Key z emaila
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          subject: `Nowe zapytanie z portfolio${formData.package ? ` - Pakiet: ${formData.package}` : ''}`,
-          message: `
-Imię i nazwisko: ${formData.name}
-Email: ${formData.email}
-Telefon: ${formData.phone || 'Nie podano'}
-Wybrany pakiet: ${formData.package || 'Nie wybrano'}
-
-Treść wiadomości:
-${formData.message}
-          `,
+          package: formData.package,
+          message: formData.message,
+          _subject: `Nowe zapytanie z portfolio${formData.package ? ` - Pakiet: ${formData.package}` : ''}`,
         }),
       });
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (response.ok) {
         setSubmitted(true);
         setTimeout(() => {
           setSubmitted(false);
@@ -105,7 +90,7 @@ ${formData.message}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Wypełnij formularz poniżej, a odezwę się do Ciebie w ciągu 24 godzin! ✉️
+            Masz pytania? Potrzebujesz wyceny? A może chcesz po prostu porozmawiać o swoim projekcie? Napisz - odpowiem w ciągu 24 godzin!
           </motion.p>
         </motion.div>
 
@@ -119,7 +104,7 @@ ${formData.message}
           >
             {submitted ? (
               <motion.div
-                className="flex flex-col items-center justify-center h-full text-center"
+                className="flex flex-col items-center justify-center h-full text-center py-12"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -129,10 +114,11 @@ ${formData.message}
                   animate={{ scale: 1, rotate: 360 }}
                   transition={{ duration: 0.6, type: 'spring' }}
                 >
-                  <CheckCircle className="w-20 h-20 text-green-500 mb-4" />
+                  <CheckCircle className="w-20 h-20 text-green-500 mb-6" />
                 </motion.div>
-                <h3 className="text-2xl mb-2 text-gray-900">Dziękuję za wiadomość!</h3>
-                <p className="text-gray-600">Odezwę się do Ciebie jak najszybciej 😊</p>
+                <h3 className="text-2xl font-bold mb-3 text-gray-900">Dziękuję za wiadomość!</h3>
+                <p className="text-gray-600 text-lg mb-2">Twoja wiadomość została wysłana pomyślnie.</p>
+                <p className="text-gray-500 text-sm">Odezwę się do Ciebie w ciągu 24 godzin na podany adres email.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -153,7 +139,7 @@ ${formData.message}
                 )}
 
                 <div>
-                  <label htmlFor="name" className="block text-sm text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Imię i nazwisko *
                   </label>
                   <input
@@ -164,12 +150,12 @@ ${formData.message}
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 outline-none transition-all"
-                    placeholder="Jan Kowalski"
+                    placeholder="np. Jan Kowalski"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email *
                   </label>
                   <input
@@ -180,13 +166,13 @@ ${formData.message}
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 outline-none transition-all"
-                    placeholder="jan@example.com"
+                    placeholder="np. jan@mojafirma.pl"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm text-gray-700 mb-2">
-                    Telefon
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    Telefon <span className="text-gray-500 font-normal">(opcjonalnie)</span>
                   </label>
                   <input
                     type="tel"
@@ -195,13 +181,13 @@ ${formData.message}
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 outline-none transition-all"
-                    placeholder="+48 123 456 789"
+                    placeholder="np. +48 123 456 789"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="package" className="block text-sm text-gray-700 mb-2">
-                    Interesujący pakiet
+                  <label htmlFor="package" className="block text-sm font-medium text-gray-700 mb-2">
+                    Interesujący pakiet <span className="text-gray-500 font-normal">(opcjonalnie)</span>
                   </label>
                   <select
                     id="package"
@@ -210,16 +196,16 @@ ${formData.message}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 outline-none transition-all bg-white"
                   >
-                    <option value="">Wybierz pakiet...</option>
-                    <option value="MINI">Pakiet MINI - 1 400 zł</option>
-                    <option value="STANDARD">Pakiet STANDARD - 2 000 zł</option>
-                    <option value="PLUS">Pakiet PLUS - 2 600 zł</option>
-                    <option value="INDYWIDUALNY">Oferta indywidualna</option>
+                    <option value="">Wybierz pakiet lub napisz o swoich potrzebach...</option>
+                    <option value="MINI">Pakiet MINI - 1 400 zł netto (wizytówka online)</option>
+                    <option value="STANDARD">Pakiet STANDARD - 2 000 zł netto (najpopularniejszy)</option>
+                    <option value="PLUS">Pakiet PLUS - 2 600 zł netto (zaawansowana strona)</option>
+                    <option value="INDYWIDUALNY">Oferta indywidualna - dopasowana do budżetu</option>
                   </select>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Wiadomość *
                   </label>
                   <textarea
@@ -230,19 +216,22 @@ ${formData.message}
                     onChange={handleChange}
                     rows={5}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 outline-none transition-all resize-none"
-                    placeholder="Opowiedz mi o swoim projekcie..."
+                    placeholder="Opowiedz mi o swoim projekcie... Np.: Jaki jest cel strony? Kto jest grupą docelową? Czy masz już materiały (logo, zdjęcia, teksty)?"
                   />
                 </div>
 
                 <motion.button
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 font-semibold text-lg"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Send className="w-5 h-5" />
-                  Wyślij wiadomość
+                  Wyślij zapytanie
                 </motion.button>
+                <p className="text-xs text-gray-500 text-center -mt-2">
+                  Odpowiadam na wszystkie wiadomości w ciągu 24h
+                </p>
               </form>
             )}
           </motion.div>
@@ -265,14 +254,14 @@ ${formData.message}
                   <Mail className="w-6 h-6 text-violet-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg mb-1 text-gray-900">Email</h3>
+                  <h3 className="text-lg font-semibold mb-1 text-gray-900">Email</h3>
                   <a
-                    href="mailto:contact@lofiwebstudio.pl"
-                    className="text-violet-600 hover:underline"
+                    href="mailto:sisiwebstudio@gmail.com"
+                    className="text-violet-600 hover:underline font-medium"
                   >
-                    contact@lofiwebstudio.pl
+                    sisiwebstudio@gmail.com
                   </a>
-                  <p className="text-sm text-gray-600 mt-1">Odpowiadam w ciągu 24h</p>
+                  <p className="text-sm text-gray-600 mt-1">Najszybszy sposób kontaktu - odpowiadam w ciągu 24h</p>
                 </div>
               </div>
             </motion.div>
@@ -283,15 +272,15 @@ ${formData.message}
               transition={{ duration: 0.3 }}
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg mb-1 text-gray-900">Telefon</h3>
-                  <a href="tel:+48123456789" className="text-green-600 hover:underline">
-                    +48 123 456 789
+                  <h3 className="text-lg font-semibold mb-1 text-gray-900">Telefon</h3>
+                  <a href="tel:+48728285265" className="text-purple-600 hover:underline font-medium">
+                    +48 728 285 265
                   </a>
-                  <p className="text-sm text-gray-600 mt-1">Pon-Pt: 9:00 - 17:00</p>
+                  <p className="text-sm text-gray-600 mt-1">Pon-Pt: 9:00 - 17:00 (preferowany kontakt mailowy)</p>
                 </div>
               </div>
             </motion.div>
@@ -306,9 +295,9 @@ ${formData.message}
                   <MapPin className="w-6 h-6 text-pink-600" />
                 </div>
                 <div>
-                  <h3 className="text-lg mb-1 text-gray-900">Lokalizacja</h3>
-                  <p className="text-gray-700">Warszawa, Polska</p>
-                  <p className="text-sm text-gray-600 mt-1">Spotkania online lub osobiście</p>
+                  <h3 className="text-lg font-semibold mb-1 text-gray-900">Lokalizacja</h3>
+                  <p className="text-gray-700 font-medium">Kraków, Polska</p>
+                  <p className="text-sm text-gray-600 mt-1">Spotkania online (cała Polska) lub osobiście w Krakowie</p>
                 </div>
               </div>
             </motion.div>
@@ -320,15 +309,27 @@ ${formData.message}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <h3 className="text-xl mb-4 flex items-center gap-2">
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
                 Dlaczego warto się skontaktować?
               </h3>
-              <ul className="space-y-2 text-sm text-white/90">
-                <li>✅ Darmowa konsultacja i wycena</li>
-                <li>✅ Odpowiedź w ciągu 24 godzin</li>
-                <li>✅ Konkretne porady i rozwiązania</li>
-                <li>✅ Bez zobowiązań i ukrytych kosztów</li>
+              <ul className="space-y-3 text-sm text-white/95">
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0">✅</span>
+                  <span>Darmowa konsultacja - porozmawiamy o Twoich potrzebach bez zobowiązań</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0">✅</span>
+                  <span>Szybka odpowiedź - gwarantowana reakcja w ciągu 24 godzin</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0">✅</span>
+                  <span>Konkretna wycena - transparentne ceny dostosowane do Twojego budżetu</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="flex-shrink-0">✅</span>
+                  <span>Profesjonalne doradztwo - pomogę wybrać najlepsze rozwiązanie dla Twojego biznesu</span>
+                </li>
               </ul>
             </motion.div>
           </motion.div>

@@ -1,11 +1,11 @@
-import { Mail, Github, Linkedin, Twitter, Send, Sparkles } from 'lucide-react';
+import { Mail, Send, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export function Contact() {
   return (
     <section
       id="contact"
-      className="py-20 px-6 bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50 relative overflow-hidden"
+      className="py-20 px-6 bg-gradient-to-br from-violet-50 via-purple-50 to-pink-50 relative overflow-hidden"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden opacity-30">
@@ -50,13 +50,13 @@ export function Contact() {
               <Sparkles className="w-6 h-6 text-violet-600" />
             </motion.div>
             <motion.h2
-              className="text-4xl md:text-5xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              Rozwijmy Twój Biznes
+              Gotowy na rozmowę?
             </motion.h2>
             <motion.div
               animate={{ rotate: [0, -15, 0] }}
@@ -73,21 +73,19 @@ export function Contact() {
             transition={{ duration: 0.8, delay: 0.3 }}
           />
           <motion.p
-            className="text-lg text-gray-700 mb-12 max-w-2xl mx-auto"
+            className="text-lg text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Gotowy, aby zaistnieć w internecie lub odnowić swoją obecną stronę? 💬 Chętnie
-            porozmawiam o Twoich celach i zobaczę, jak mogę pomóc. Bez zobowiązań, tylko przyjazne
-            porady! ✨
+            Masz pytania o cennik? Chcesz omówić swój projekt? Napisz - odpowiem w ciągu 24 godzin i chętnie pomogę!
           </motion.p>
         </motion.div>
 
         <motion.a
-          href="mailto:contact@lofiwebstudio.pl"
-          className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 text-white rounded-full hover:shadow-2xl transition-all text-lg mb-12 group shadow-lg"
+          href="mailto:sisiwebstudio@gmail.com"
+          className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 text-white rounded-full hover:shadow-2xl transition-all text-lg mb-12 group shadow-lg font-semibold"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -102,7 +100,7 @@ export function Contact() {
           >
             <Mail className="w-5 h-5" />
           </motion.div>
-          contact@lofiwebstudio.pl
+          sisiwebstudio@gmail.com
           <motion.div
             whileHover={{ x: [0, 3, 0] }}
             transition={{ duration: 0.5, repeat: Infinity }}
@@ -110,45 +108,6 @@ export function Contact() {
             <Send className="w-5 h-5" />
           </motion.div>
         </motion.a>
-
-        <motion.div
-          className="flex justify-center gap-6 pt-8 border-t-2 border-gradient-to-r from-violet-200 to-pink-200"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {[
-            { icon: Github, href: 'https://github.com', color: 'from-gray-600 to-gray-800' },
-            { icon: Linkedin, href: 'https://linkedin.com', color: 'from-blue-600 to-blue-800' },
-            { icon: Twitter, href: 'https://twitter.com', color: 'from-sky-500 to-blue-600' },
-          ].map((social, index) => (
-            <motion.a
-              key={index}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`w-14 h-14 rounded-full bg-gradient-to-r ${social.color} flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all`}
-              whileHover={{
-                scale: 1.2,
-                rotate: [0, -10, 10, -10, 10, 0],
-                y: -5,
-              }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, y: 20, scale: 0 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.5,
-                delay: 0.5 + index * 0.1,
-                type: 'spring',
-                stiffness: 200,
-              }}
-            >
-              <social.icon className="w-6 h-6" />
-            </motion.a>
-          ))}
-        </motion.div>
 
         <motion.p
           className="text-gray-500 mt-12"

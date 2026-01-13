@@ -3,7 +3,7 @@ import { HomePage } from './components/HomePage';
 import { Pricing } from './components/Pricing';
 import { ContactPage } from './components/ContactPage';
 import { ProjectDetail } from './components/ProjectDetail';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'pricing' | 'contact' | 'project'>(
@@ -28,13 +28,17 @@ export default function App() {
     setCurrentPage('home');
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation
         currentPage={currentPage === 'project' ? 'home' : currentPage}
         onNavigate={handleNavigate}
       />
-      {currentPage === 'home' && <HomePage onProjectClick={handleProjectClick} />}
+      {currentPage === 'home' && <HomePage onProjectClick={handleProjectClick} onNavigate={handleNavigate} />}
       {currentPage === 'pricing' && <Pricing onSelectPackage={handleNavigate} />}
       {currentPage === 'contact' && <ContactPage selectedPackage={selectedPackage} />}
       {currentPage === 'project' && (
